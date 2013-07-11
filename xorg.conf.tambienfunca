@@ -1,0 +1,110 @@
+
+Section "ServerLayout"
+        Identifier     "X.org Configured"
+        Screen      0  "Screen0" 0 0
+        InputDevice    "Mouse0" "CorePointer"
+        InputDevice    "Keyboard0" "CoreKeyboard"
+		Option "IsolateDevice" "PCI:0:1:1"
+EndSection
+
+
+Section "Files"
+        ModulePath   "/usr/lib/xorg/modules"
+        FontPath     "/usr/share/fonts/X11/misc"
+        FontPath     "/usr/share/fonts/X11/cyrillic"
+        FontPath     "/usr/share/fonts/X11/100dpi/:unscaled"
+        FontPath     "/usr/share/fonts/X11/75dpi/:unscaled"
+        FontPath     "/usr/share/fonts/X11/Type1"
+        FontPath     "/usr/share/fonts/X11/100dpi"
+        FontPath     "/usr/share/fonts/X11/75dpi"
+        FontPath     "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+        FontPath     "built-ins"
+EndSection
+
+Section "Module"
+        Load  "dri2"
+        Load  "record"
+        Load  "dbe"
+        Load  "glx"
+        Load  "dri"
+        Load  "extmod"
+	Load  "v41"
+	Load  "type1"
+	Load  "freetype"
+	Load  "bitmap"
+EndSection
+
+#Section "Module"
+#	Load "dbe" # Double-Buffering Extension
+#	Load "v4l" # Video for Linux
+#	Load "extmod"
+#	Load "type1"
+#	Load "freetype"
+#EndSection
+
+
+Section "InputDevice"
+        Identifier  "Keyboard0"
+        Driver      "kbd"
+EndSection
+
+Section "InputDevice"
+        Identifier  "Mouse0"
+        Driver      "mouse"
+        Option      "Protocol" "auto"
+        Option      "Device" "/dev/input/mice"
+        Option      "ZAxisMapping" "4 5 6 7"
+EndSection
+
+Section "Extensions"
+	Option "Composite" "0"
+EndSection
+
+Section "Monitor"
+	Identifier "Monitor0"
+	VendorName "Monitor Vendor"
+	ModelName "Generic monitor"
+	HorizSync 25 - 50
+	VertRefresh 50.0 - 75.0
+	Modeline "800x480"   33.45 800 840 968 1056 480 490 492 525 -hsync -vsync
+	Modeline "1024x600" 48.96  1024 1064 1168 1312  600 601 604 622 -hsync +vsync
+
+        # measured on the ecafe EC800, dont know if it has any influence:
+	DisplaySize 177 100
+	DisplaySize 255 150
+	Option "dpms"
+EndSection
+
+Section "Device"
+	Identifier "Cardo0"
+	VendorName "Videocard vendor"
+	BoardName "AMD Geode LX Video"
+	Driver "geode"
+	BusID "PCI:0:1:1"
+        # Specify Panel size for Geode LX, corresponds with ModeLine above:
+	Option "PanelMode" "33450 800 840 968 1056 480 490 492 525"
+	Option "PanelMode" "48960 1024 1064 1168 1312  600 601 604 622"
+EndSection
+
+Section "Screen"
+	Identifier "Screen0"
+	Device "Card0"
+	Monitor "Monitor0"
+	DefaultDepth 16
+	Subsection "Display"
+    		Depth 16
+	    	Modes	"800x480"
+    		Modes	"1024x600" "800x480"
+    		Viewport 0 0
+	EndSubsection
+		Subsection "Display"
+    		Depth 24
+	    	Modes	"800x480"
+    		Modes	"1024x600" "800x480"
+    		Viewport 0 0
+	EndSubsection
+EndSection
+
+Section "Extensions"
+	Option "Composite" "enable"
+EndSection

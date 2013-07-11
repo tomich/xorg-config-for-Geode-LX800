@@ -1,0 +1,49 @@
+Section "Monitor"
+        Identifier "Monitor0"
+        VendorName "Monitor Vendor"
+        ModelName "Generic monitor"
+        HorizSync 25 - 50
+        VertRefresh 50.0 - 75.0
+        Modeline "800x480"   33.45 800 840 968 1056 480 490 492 525 -hsync -vsync
+        Modeline "1024x600" 48.96  1024 1064 1168 1312  600 601 604 622 -hsync +vsync
+
+        
+        #DisplaySize 177 100
+        #DisplaySize 255 150
+        Option "dpms"
+EndSection
+
+Section "Device"
+        Identifier "Cardo0"
+        VendorName "Videocard vendor"
+        BoardName "AMD Geode LX Video"
+        Driver "geode"
+        BusID "PCI:0:1:1"
+        # Specify Panel size for Geode LX, corresponds with ModeLine above:
+        Option "PanelMode" "33450 800 840 968 1056 480 490 492 525"
+        Option "PanelMode" "48960 1024 1064 1168 1312  600 601 604 622"
+EndSection
+
+ Section "InputDevice"
+       Identifier "PenMount"
+       Driver "penmount"
+       Option "Protocol"  "PM6000USB"
+       Option "Device"  "/dev/input/by-id/usb-DIALOGUE_INC_PenMount_USB-event-joystick"
+       Option "PMode">  "1"
+       Option "MinX"  "10"
+       Option "MaxX"  "1000"
+       Option "MinY"  "10"
+       Option "MaxY"  "1000"
+       Option "ADBit">  "10"
+       Option "Baudrate"  "19200"
+       Option "Beep"  "0"  #  0 = no beep, 1 = beep enabled
+ #     Option "PressVol"  "100" #  volume of beep (press event)
+ #     Option "PressPitch" "880" #  pitch of beep (press event)
+ #     Option "PressDur"  "15" #  length of beep in 10ms (press event)
+ #     Option "ReleaseVol" "0"  #  volume of beep (release event)
+ #     Option "ReleasePitch""1200"#  pitch of beep (release event)
+ #     Option "ReleaseDur" "10" #  len of beep in 10ms (release event)
+       Option "RightButton" "1" #  right button active in ms
+       Option "RightButtonStart" "500" #  right button active in ms
+       Option "RightButtonEnd" "900" #  right button inactive in ms
+ EndSection
